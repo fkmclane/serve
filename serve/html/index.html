@@ -1,0 +1,27 @@
+<html>
+    <head>
+        <title>file - Index of {dirname}</title>
+
+        <style>
+            table {{ width: 100%; text-align: left; }}
+            th:nth-child(1), td:nth-child(1) {{ width: 55%; }}
+            th:nth-child(2), td:nth-child(2) {{ width: 20%; }}
+            th:nth-child(3), td:nth-child(3) {{ width: 25%; }}
+        </style>{head}
+    </head>
+
+    <body>
+		<header>
+			<h1>Index of {dirname}</h1>
+		</header>
+        <main>
+            <table>
+                <thead>
+                    <tr><th>Filename</th><th>Size</th><th>Last Modified</th></tr>
+                </thead>
+                <tbody>
+{entries}                </tbody>
+            </table>
+        </main>
+    </body>
+</html>
