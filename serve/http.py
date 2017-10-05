@@ -1,6 +1,6 @@
-import web, web.fancyindex, web.page, web.file
+import fooster.web, fooster.web.fancyindex, fooster.web.page, fooster.web.file
 
-from serve import config, log
+from serve import config
 
 http = None
 
@@ -8,7 +8,7 @@ routes = {}
 error_routes = {}
 
 
-class IndexHandler(web.fancyindex.FancyIndexHandler):
+class IndexHandler(fooster.web.fancyindex.FancyIndexHandler):
     local = config.template + '/res'
     remote = '/res'
     fileidx = 0
@@ -20,24 +20,24 @@ class IndexHandler(web.fancyindex.FancyIndexHandler):
         with open(config.template + '/' + 'entry.html', 'r') as file:
             self.index_entry = file.read()
 
-        self.index_content_type = 'text/html; charset=' + web.default_encoding
+        self.index_content_type = 'text/html; charset=' + fooster.web.default_encoding
 
         return super().index()
 
 
-class ErrorPage(web.page.PageErrorHandler):
+class ErrorPage(fooster.web.page.PageErrorHandler):
     directory = config.template
     page = 'error.html'
 
 
-routes.update(web.file.new(config.root, dir_index=True, handler=IndexHandler))
-error_routes.update(web.page.new_error(handler=ErrorPage))
+routes.update(fooster.web.file.new(config.root, dir_index=True, handler=IndexHandler))
+error_routes.update(fooster.web.page.new_error(handler=ErrorPage))
 
 
 def start():
     global http
 
-    http = web.HTTPServer(config.addr, routes, error_routes, log=log.httplog)
+    http = fooster.web.HTTPServer(config.addr, routes, error_routes)
     http.start()
 
 
@@ -46,3 +46,9 @@ def stop():
 
     http.stop()
     http = None
+
+
+def join():
+    global http
+
+    http.join()
