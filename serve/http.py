@@ -1,6 +1,12 @@
-import fooster.web, fooster.web.fancyindex, fooster.web.page, fooster.web.file
+import os.path
+
+import fooster.web
+import fooster.web.fancyindex
+import fooster.web.page
+import fooster.web.file
 
 from serve import config
+
 
 http = None
 
@@ -9,15 +15,11 @@ error_routes = {}
 
 
 class IndexHandler(fooster.web.fancyindex.FancyIndexHandler):
-    local = config.template + '/res'
-    remote = '/res'
-    fileidx = 0
-
     def index(self):
-        with open(config.template + '/' + 'index.html', 'r') as file:
+        with open(os.path.join(config.template, 'index.html'), 'r') as file:
             self.index_template = file.read()
 
-        with open(config.template + '/' + 'entry.html', 'r') as file:
+        with open(os.path.join(config.template, 'entry.html'), 'r') as file:
             self.index_entry = file.read()
 
         self.index_content_type = 'text/html; charset=' + fooster.web.default_encoding
