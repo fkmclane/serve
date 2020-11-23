@@ -5,7 +5,6 @@ import re
 from setuptools import setup, find_packages
 
 
-name = None
 version = None
 
 
@@ -24,22 +23,25 @@ def find(haystack, *needles):
                 del regexes[rindex]
                 break
 
-    return values
+    if len(needles) == 1:
+        return values[0]
+    else:
+        return values
 
 
 with open(os.path.join(os.path.dirname(__file__), 'serve', '__init__.py'), 'r') as serve:
-    name, version = find(serve, 'name', 'version')
+    version = find(serve, '__version__')
 
 
 setup(
-    name=name,
+    name='serve',
     version=version,
     description='a simple autoindexing file server',
     license='MIT',
-    author='Foster McLane',
-    author_email='fkmclane@gmail.com',
+    author='Lily Foster',
+    author_email='lily@lily.flowers',
     install_requires=['fooster-web'],
     packages=find_packages(),
     package_data={'': ['html/*.*', 'res/*.*']},
-    entry_points = {'console_scripts': ['serve = serve.__main__:main']},
+    entry_points={'console_scripts': ['serve = serve.__main__:main']},
 )
